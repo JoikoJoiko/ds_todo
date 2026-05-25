@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Вход — Dark Todo{% endblock %}
+
+{% block content %}
+
+<section class="auth-card">
+    <div class="auth-text">
+        <p class="eyebrow">Возвращение героя</p>
+        <h1>Вход</h1>
+        <p>Войди, чтобы продолжить управлять своими задачами.</p>
+    </div>
+
+    <form method="post" class="auth-form">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="form-errors">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <div class="form-field">
+            <label for="{{ form.username.id_for_label }}">Логин</label>
+            {{ form.username }}
+        </div>
+
+        <div class="form-field">
+            <label for="{{ form.password.id_for_label }}">Пароль</label>
+            {{ form.password }}
+        </div>
+
+        <button type="submit" class="btn btn-primary full-width">Войти</button>
+
+        <p class="auth-note">
+            Нет аккаунта?
+            <a href="{% url 'register' %}">Зарегистрироваться</a>
+        </p>
+    </form>
+</section>
+
+{% endblock %}

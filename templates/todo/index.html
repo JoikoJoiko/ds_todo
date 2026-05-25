@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Главная — Nocturne Tasks{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-text">
+        <p class="label">Todo list</p>
+        <h1>Тёмный список задач</h1>
+
+        <p>
+            Минималистичный планировщик задач с авторизацией,
+            базой данных и админ-панелью.
+        </p>
+
+        <div class="actions">
+            {% if user.is_authenticated %}
+                <a href="{% url 'task_list' %}" class="btn primary">Мои задачи</a>
+                <a href="{% url 'task_create' %}" class="btn">Добавить</a>
+            {% else %}
+                <a href="{% url 'register' %}" class="btn primary">Начать</a>
+                <a href="{% url 'login' %}" class="btn">Войти</a>
+            {% endif %}
+        </div>
+
+        {% if user.is_authenticated %}
+            <div class="stats">
+                <div><b>{{ tasks_count }}</b><span>всего</span></div>
+                <div><b>{{ active_count }}</b><span>активных</span></div>
+                <div><b>{{ done_count }}</b><span>готово</span></div>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="hero-image">
+        <img src="{% static 'img/hero-knight-cat.jpg' %}" alt="">
+    </div>
+</section>
+
+{% endblock %}

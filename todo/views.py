@@ -2,6 +2,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib.auth.forms import AuthenticationForm
 
 from .forms import RegisterForm, TaskForm
 from .models import Task
@@ -138,11 +139,24 @@ def register(request):
         'form': form
     })
 
+class CustomAuthenticationForm(AuthenticationForm):
+    def __init__(self, request=None, *args, **kwargs):
+        super().__init__(request, *args, **kwargs)
+
+        self.fields['username'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Введите логин'
+        })
+
+        self.fields['password'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Введите пароль'
+        })
 
 class CustomLoginView(LoginView):
     template_name = 'todo/login.html'
+    authentication_form = CustomAuthenticationForm
     redirect_authenticated_user = True
-
 
 class CustomLogoutView(LogoutView):
     next_page = 'index'

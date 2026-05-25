@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Удаление задачи — Dark Todo{% endblock %}
+
+{% block content %}
+
+<section class="page-card delete-card">
+    <p class="eyebrow">Опасная зона</p>
+    <h1>Удалить задачу?</h1>
+
+    <p>
+        Ты собираешься удалить задачу:
+        <strong>«{{ task.title }}»</strong>
+    </p>
+
+    <p>
+       После удаления запись исчезнет из архива без возможности восстановления.
+    </p>
+
+    <form method="post" class="form-actions">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Да, удалить</button>
+        <a href="{% url 'task_detail' task.pk %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</section>
+
+{% endblock %}

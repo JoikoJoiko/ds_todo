@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} — Dark Todo{% endblock %}
+
+{% block content %}
+
+<section class="page-card form-card">
+    <p class="eyebrow">Task record</p>
+    <h1>{{ title }}</h1>
+
+    <form method="post" class="task-form">
+        {% csrf_token %}
+
+        <div class="form-field">
+            <label for="{{ form.title.id_for_label }}">Название</label>
+            {{ form.title }}
+            {{ form.title.errors }}
+        </div>
+
+        <div class="form-field">
+            <label for="{{ form.description.id_for_label }}">Описание</label>
+            {{ form.description }}
+            {{ form.description.errors }}
+        </div>
+
+        <div class="form-row">
+            <div class="form-field">
+                <label for="{{ form.status.id_for_label }}">Статус</label>
+                {{ form.status }}
+                {{ form.status.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.priority.id_for_label }}">Приоритет</label>
+                {{ form.priority }}
+                {{ form.priority.errors }}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-field">
+                <label for="{{ form.category.id_for_label }}">Категория</label>
+                {{ form.category }}
+                {{ form.category.errors }}
+            </div>
+
+            <div class="form-field">
+                <label for="{{ form.deadline.id_for_label }}">Срок выполнения</label>
+                {{ form.deadline }}
+                {{ form.deadline.errors }}
+            </div>
+        </div>
+
+        <div class="checkbox-field">
+            {{ form.is_favorite }}
+            <label for="{{ form.is_favorite.id_for_label }}">Добавить в избранное</label>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">{{ button_text }}</button>
+            <a href="{% url 'task_list' %}" class="btn btn-secondary">Отмена</a>
+        </div>
+    </form>
+</section>
+
+{% endblock %}

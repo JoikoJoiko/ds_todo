@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}Мои задачи — Dark Todo{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+    <div>
+<p class="eyebrow">Personal task archive</p>
+<h1>Мои записи</h1>
+    </div>
+
+<a href="{% url 'task_create' %}" class="btn btn-primary">Новая запись</a>
+</section>
+
+<form method="get" class="filter-panel">
+    <select name="status">
+        <option value="">Все статусы</option>
+        <option value="new" {% if selected_status == 'new' %}selected{% endif %}>Новые</option>
+        <option value="in_progress" {% if selected_status == 'in_progress' %}selected{% endif %}>В процессе</option>
+        <option value="done" {% if selected_status == 'done' %}selected{% endif %}>Выполненные</option>
+        <option value="archived" {% if selected_status == 'archived' %}selected{% endif %}>Архив</option>
+    </select>
+
+    <select name="priority">
+        <option value="">Все приоритеты</option>
+        <option value="low" {% if selected_priority == 'low' %}selected{% endif %}>Низкий</option>
+        <option value="medium" {% if selected_priority == 'medium' %}selected{% endif %}>Средний</option>
+        <option value="high" {% if selected_priority == 'high' %}selected{% endif %}>Высокий</option>
+        <option value="critical" {% if selected_priority == 'critical' %}selected{% endif %}>Критический</option>
+    </select>
+
+    <select name="category">
+        <option value="">Все категории</option>
+        <option value="study" {% if selected_category == 'study' %}selected{% endif %}>Учёба</option>
+        <option value="work" {% if selected_category == 'work' %}selected{% endif %}>Работа</option>
+        <option value="home" {% if selected_category == 'home' %}selected{% endif %}>Дом</option>
+        <option value="personal" {% if selected_category == 'personal' %}selected{% endif %}>Личное</option>
+        <option value="other" {% if selected_category == 'other' %}selected{% endif %}>Другое</option>
+    </select>
+
+    <button type="submit" class="btn btn-secondary">Фильтр</button>
+    <a href="{% url 'task_list' %}" class="btn btn-ghost">Сброс</a>
+</form>
+
+{% if tasks %}
+    <div class="task-grid">
+        {% for task in tasks %}
+            <article class="task-card priority-{{ task.priority }}">
+                <div class="task-card-header">
+                    <span class="task-status status-{{ task.status }}">
+                        {{ task.get_status_display }}
+                    </span>
+
+                    {% if task.is_favorite %}
+                        <span class="favorite-mark">★</span>
+                    {% endif %}
+                </div>
+
+                <h2>
+                    <a href="{% url 'task_detail' task.pk %}">
+                        {{ task.title }}
+                    </a>
+                </h2>
+
+                <p class="task-description">
+                    {% if task.description %}
+                        {{ task.description|truncatechars:120 }}
+                    {% else %}
+                        Описание не указано.
+                    {% endif %}
+                </p>
+
+                <div class="task-meta">
+                    <span>Приоритет: {{ task.get_priority_display }}</span>
+                    <span>Категория: {{ task.get_category_display }}</span>
+
+                    {% if task.deadline %}
+                        <span>Срок: {{ task.deadline|date:"d.m.Y" }}</span>
+                    {% else %}
+                        <span>Без срока</span>
+                    {% endif %}
+                </div>
+
+                <div class="task-actions">
+                    <a href="{% url 'task_detail' task.pk %}" class="small-link">Открыть</a>
+                    <a href="{% url 'task_update' task.pk %}" class="small-link">Изменить</a>
+                    <a href="{% url 'task_delete' task.pk %}" class="small-link danger">Удалить</a>
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+{% else %}
+<div class="empty-image">
+    <span>∅</span>
+</div>
+<h2>Записей пока нет</h2>
+<p>Архив пуст. Создай первую задачу, чтобы начать вести личный кодекс.</p>
+<a href="{% url 'task_create' %}" class="btn btn-primary">Создать запись</a>
+{% endif %}
+
+{% endblock %}
