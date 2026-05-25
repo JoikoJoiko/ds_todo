@@ -120,6 +120,19 @@ def task_delete(request, pk):
         'task': task
     })
 
+@login_required
+def task_toggle_done(request, pk):
+    task = get_object_or_404(Task, pk=pk, user=request.user)
+
+    if request.method == 'POST':
+        if task.status == 'done':
+            task.status = 'in_progress'
+        else:
+            task.status = 'done'
+
+        task.save()
+
+    return redirect('task_list')
 
 def register(request):
     if request.user.is_authenticated:

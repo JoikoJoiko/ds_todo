@@ -1,26 +1,19 @@
 {% extends 'base.html' %}
 
-{% block title %}Удаление задачи — Dark Todo{% endblock %}
+{% block title %}Удаление — Nocturne Tasks{% endblock %}
 
 {% block content %}
 
-<section class="page-card delete-card">
-    <p class="eyebrow">Опасная зона</p>
+<section class="card">
+    <p class="label">Delete</p>
     <h1>Удалить задачу?</h1>
 
-    <p>
-        Ты собираешься удалить задачу:
-        <strong>«{{ task.title }}»</strong>
-    </p>
-
-    <p>
-       После удаления запись исчезнет из архива без возможности восстановления.
-    </p>
+    <p>«{{ task.title }}» будет удалена без восстановления.</p>
 
     <form method="post" class="form-actions">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Да, удалить</button>
-        <a href="{% url 'task_detail' task.pk %}" class="btn btn-secondary">Отмена</a>
+        <button type="submit" class="btn danger">Удалить</button>
+        <a href="{% url 'task_detail' task.pk %}" class="btn">Отмена</a>
     </form>
 </section>
 

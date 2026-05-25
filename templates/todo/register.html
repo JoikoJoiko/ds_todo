@@ -1,15 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}Регистрация — Dark Todo{% endblock %}
+{% block title %}Регистрация — Nocturne Tasks{% endblock %}
 
 {% block content %}
 
 <section class="auth-card">
-    <div class="auth-text">
-        <p class="eyebrow">Начало пути</p>
-        <h1>Регистрация</h1>
-        <p>Создай аккаунт и начни собирать свои задачи в личный список квестов.</p>
-    </div>
+    <p class="label">Register</p>
+    <h1>Регистрация</h1>
 
     <form method="post" class="auth-form">
         {% csrf_token %}
@@ -32,7 +29,7 @@
             {{ form.password2.errors }}
         </div>
 
-        <button type="submit" class="btn btn-primary full-width">Создать аккаунт</button>
+        <button type="submit" class="btn primary full-width">Создать аккаунт</button>
 
         <p class="auth-note">
             Уже есть аккаунт?

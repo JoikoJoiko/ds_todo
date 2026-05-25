@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 
-{% block title %}Мои задачи — Dark Todo{% endblock %}
+{% block title %}Задачи — Nocturne Tasks{% endblock %}
 
 {% block content %}
 
 <section class="page-heading">
     <div>
-<p class="eyebrow">Personal task archive</p>
-<h1>Мои записи</h1>
+        <p class="label">Tasks</p>
+        <h1>Задачи</h1>
     </div>
 
-<a href="{% url 'task_create' %}" class="btn btn-primary">Новая запись</a>
+    <a href="{% url 'task_create' %}" class="btn primary">Добавить</a>
 </section>
 
 <form method="get" class="filter-panel">
@@ -18,7 +18,7 @@
         <option value="">Все статусы</option>
         <option value="new" {% if selected_status == 'new' %}selected{% endif %}>Новые</option>
         <option value="in_progress" {% if selected_status == 'in_progress' %}selected{% endif %}>В процессе</option>
-        <option value="done" {% if selected_status == 'done' %}selected{% endif %}>Выполненные</option>
+        <option value="done" {% if selected_status == 'done' %}selected{% endif %}>Готово</option>
         <option value="archived" {% if selected_status == 'archived' %}selected{% endif %}>Архив</option>
     </select>
 
@@ -27,7 +27,7 @@
         <option value="low" {% if selected_priority == 'low' %}selected{% endif %}>Низкий</option>
         <option value="medium" {% if selected_priority == 'medium' %}selected{% endif %}>Средний</option>
         <option value="high" {% if selected_priority == 'high' %}selected{% endif %}>Высокий</option>
-        <option value="critical" {% if selected_priority == 'critical' %}selected{% endif %}>Критический</option>
+        <option value="critical" {% if selected_priority == 'critical' %}selected{% endif %}>Критичный</option>
     </select>
 
     <select name="category">
@@ -39,18 +39,16 @@
         <option value="other" {% if selected_category == 'other' %}selected{% endif %}>Другое</option>
     </select>
 
-    <button type="submit" class="btn btn-secondary">Фильтр</button>
-    <a href="{% url 'task_list' %}" class="btn btn-ghost">Сброс</a>
+    <button type="submit" class="btn">Фильтр</button>
+    <a href="{% url 'task_list' %}" class="btn">Сброс</a>
 </form>
 
 {% if tasks %}
     <div class="task-grid">
         {% for task in tasks %}
-            <article class="task-card priority-{{ task.priority }}">
+            <article class="task-card {% if task.status == 'done' %}is-done{% endif %}">
                 <div class="task-card-header">
-                    <span class="task-status status-{{ task.status }}">
-                        {{ task.get_status_display }}
-                    </span>
+                    <span class="task-status">{{ task.get_status_display }}</span>
 
                     {% if task.is_favorite %}
                         <span class="favorite-mark">★</span>
@@ -65,24 +63,33 @@
 
                 <p class="task-description">
                     {% if task.description %}
-                        {{ task.description|truncatechars:120 }}
+                        {{ task.description|truncatechars:90 }}
                     {% else %}
-                        Описание не указано.
+                        Без описания.
                     {% endif %}
                 </p>
 
                 <div class="task-meta">
-                    <span>Приоритет: {{ task.get_priority_display }}</span>
-                    <span>Категория: {{ task.get_category_display }}</span>
+                    <span>{{ task.get_priority_display }} приоритет</span>
+                    <span>{{ task.get_category_display }}</span>
 
                     {% if task.deadline %}
-                        <span>Срок: {{ task.deadline|date:"d.m.Y" }}</span>
+                        <span>До {{ task.deadline|date:"d.m.Y" }}</span>
                     {% else %}
                         <span>Без срока</span>
                     {% endif %}
                 </div>
 
                 <div class="task-actions">
+                    <form action="{% url 'task_toggle_done' task.pk %}" method="post">
+                        {% csrf_token %}
+                        {% if task.status == 'done' %}
+                            <button type="submit" class="small-button">Вернуть</button>
+                        {% else %}
+                            <button type="submit" class="small-button">Готово</button>
+                        {% endif %}
+                    </form>
+
                     <a href="{% url 'task_detail' task.pk %}" class="small-link">Открыть</a>
                     <a href="{% url 'task_update' task.pk %}" class="small-link">Изменить</a>
                     <a href="{% url 'task_delete' task.pk %}" class="small-link danger">Удалить</a>
@@ -91,12 +98,11 @@
         {% endfor %}
     </div>
 {% else %}
-<div class="empty-image">
-    <span>∅</span>
-</div>
-<h2>Записей пока нет</h2>
-<p>Архив пуст. Создай первую задачу, чтобы начать вести личный кодекс.</p>
-<a href="{% url 'task_create' %}" class="btn btn-primary">Создать запись</a>
+    <section class="empty-state">
+        <h2>Пока пусто</h2>
+        <p>Добавь первую задачу.</p>
+        <a href="{% url 'task_create' %}" class="btn primary">Добавить</a>
+    </section>
 {% endif %}
 
 {% endblock %}

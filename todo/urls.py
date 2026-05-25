@@ -12,6 +12,7 @@ urlpatterns = [
     path('tasks/<int:pk>/', views.task_detail, name='task_detail'),
     path('tasks/<int:pk>/edit/', views.task_update, name='task_update'),
     path('tasks/<int:pk>/delete/', views.task_delete, name='task_delete'),
+    path('tasks/<int:pk>/toggle/', views.task_toggle_done, name='task_toggle_done'),
 
     path('register/', views.register, name='register'),
     path('login/', views.CustomLoginView.as_view(), name='login'),

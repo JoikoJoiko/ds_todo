@@ -1,15 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}Вход — Dark Todo{% endblock %}
+{% block title %}Вход — Nocturne Tasks{% endblock %}
 
 {% block content %}
 
 <section class="auth-card">
-    <div class="auth-text">
-        <p class="eyebrow">Возвращение героя</p>
-        <h1>Вход</h1>
-        <p>Войди, чтобы продолжить управлять своими задачами.</p>
-    </div>
+    <p class="label">Login</p>
+    <h1>Вход</h1>
 
     <form method="post" class="auth-form">
         {% csrf_token %}
@@ -30,11 +27,11 @@
             {{ form.password }}
         </div>
 
-        <button type="submit" class="btn btn-primary full-width">Войти</button>
+        <button type="submit" class="btn primary full-width">Войти</button>
 
         <p class="auth-note">
             Нет аккаунта?
-            <a href="{% url 'register' %}">Зарегистрироваться</a>
+            <a href="{% url 'register' %}">Регистрация</a>
         </p>
     </form>
 </section>

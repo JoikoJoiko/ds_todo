@@ -437,3 +437,55 @@ select:focus {
         flex-direction: column;
     }
 }
+
+.btn.danger,
+.danger {
+    color: #f1d2cd;
+    border-color: rgba(123, 31, 31, 0.65);
+    background: rgba(123, 31, 31, 0.24);
+}
+
+.task-card.is-done {
+    opacity: 0.68;
+}
+
+.task-card.is-done h2 {
+    text-decoration: line-through;
+    text-decoration-color: var(--accent);
+}
+
+.small-button {
+    padding: 0;
+    border: 0;
+    color: var(--accent);
+    background: transparent;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.small-button:hover {
+    text-decoration: underline;
+}
+
+.form-errors {
+    padding: 12px 14px;
+    border: 1px solid rgba(123, 31, 31, 0.55);
+    border-radius: 14px;
+    color: #f1d2cd;
+    background: rgba(123, 31, 31, 0.18);
+}
+
+.errorlist {
+    margin: 6px 0 0;
+    padding-left: 18px;
+    color: #f1d2cd;
+}
+
+.auth-note {
+    margin: 0;
+    text-align: center;
+}
+
+.auth-note a {
+    color: var(--accent);
+}

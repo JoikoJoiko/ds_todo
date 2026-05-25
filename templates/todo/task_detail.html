@@ -1,35 +1,31 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ task.title }} — Dark Todo{% endblock %}
+{% block title %}{{ task.title }} — Nocturne Tasks{% endblock %}
 
 {% block content %}
 
-<section class="page-card detail-card">
-    <div class="task-card-header">
-        <span class="task-status status-{{ task.status }}">
-            {{ task.get_status_display }}
-        </span>
-
-        {% if task.is_favorite %}
-            <span class="favorite-mark">★ Избранное</span>
-        {% endif %}
-    </div>
-
+<section class="card">
+    <p class="label">Task</p>
     <h1>{{ task.title }}</h1>
 
     <div class="detail-meta">
         <div>
-            <strong>Приоритет:</strong>
+            <strong>Статус</strong>
+            <span>{{ task.get_status_display }}</span>
+        </div>
+
+        <div>
+            <strong>Приоритет</strong>
             <span>{{ task.get_priority_display }}</span>
         </div>
 
         <div>
-            <strong>Категория:</strong>
+            <strong>Категория</strong>
             <span>{{ task.get_category_display }}</span>
         </div>
 
         <div>
-            <strong>Срок:</strong>
+            <strong>Срок</strong>
             <span>
                 {% if task.deadline %}
                     {{ task.deadline|date:"d.m.Y" }}
@@ -38,25 +34,29 @@
                 {% endif %}
             </span>
         </div>
-
-        <div>
-            <strong>Создана:</strong>
-            <span>{{ task.created_at|date:"d.m.Y H:i" }}</span>
-        </div>
     </div>
 
     <div class="description-box">
         {% if task.description %}
             {{ task.description|linebreaks }}
         {% else %}
-            <p>Описание отсутствует.</p>
+            <p>Описание не добавлено.</p>
         {% endif %}
     </div>
 
     <div class="form-actions">
-        <a href="{% url 'task_update' task.pk %}" class="btn btn-primary">Редактировать</a>
-        <a href="{% url 'task_delete' task.pk %}" class="btn btn-danger">Удалить</a>
-        <a href="{% url 'task_list' %}" class="btn btn-secondary">Назад к списку</a>
+        <form action="{% url 'task_toggle_done' task.pk %}" method="post">
+            {% csrf_token %}
+            {% if task.status == 'done' %}
+                <button type="submit" class="btn">Вернуть в работу</button>
+            {% else %}
+                <button type="submit" class="btn primary">Отметить готовой</button>
+            {% endif %}
+        </form>
+
+        <a href="{% url 'task_update' task.pk %}" class="btn">Изменить</a>
+        <a href="{% url 'task_delete' task.pk %}" class="btn danger">Удалить</a>
+        <a href="{% url 'task_list' %}" class="btn">Назад</a>
     </div>
 </section>
 

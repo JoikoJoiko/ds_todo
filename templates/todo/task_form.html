@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ title }} — Dark Todo{% endblock %}
+{% block title %}{{ title }} — Nocturne Tasks{% endblock %}
 
 {% block content %}
 
-<section class="page-card form-card">
-    <p class="eyebrow">Task record</p>
+<section class="card">
+    <p class="label">Task form</p>
     <h1>{{ title }}</h1>
 
     <form method="post" class="task-form">
@@ -45,7 +45,7 @@
             </div>
 
             <div class="form-field">
-                <label for="{{ form.deadline.id_for_label }}">Срок выполнения</label>
+                <label for="{{ form.deadline.id_for_label }}">Срок</label>
                 {{ form.deadline }}
                 {{ form.deadline.errors }}
             </div>
@@ -53,12 +53,12 @@
 
         <div class="checkbox-field">
             {{ form.is_favorite }}
-            <label for="{{ form.is_favorite.id_for_label }}">Добавить в избранное</label>
+            <label for="{{ form.is_favorite.id_for_label }}">Избранное</label>
         </div>
 
         <div class="form-actions">
-            <button type="submit" class="btn btn-primary">{{ button_text }}</button>
-            <a href="{% url 'task_list' %}" class="btn btn-secondary">Отмена</a>
+            <button type="submit" class="btn primary">{{ button_text }}</button>
+            <a href="{% url 'task_list' %}" class="btn">Отмена</a>
         </div>
     </form>
 </section>
