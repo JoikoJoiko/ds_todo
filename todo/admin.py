@@ -6,6 +6,7 @@ from .models import Task
 class TaskAdmin(admin.ModelAdmin):
     list_display = (
         'title',
+        'user',
         'status',
         'priority',
         'category',
@@ -13,17 +14,22 @@ class TaskAdmin(admin.ModelAdmin):
         'is_favorite',
         'created_at',
     )
+
     list_filter = (
         'status',
         'priority',
         'category',
         'is_favorite',
         'created_at',
+        'user',
     )
+
     search_fields = (
         'title',
         'description',
+        'user__username',
     )
+
     ordering = (
         'status',
         '-is_favorite',
