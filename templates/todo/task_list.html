@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Задачи — Nocturne Tasks{% endblock %}
 
@@ -98,11 +99,13 @@
         {% endfor %}
     </div>
 {% else %}
-    <section class="empty-state">
-        <h2>Пока пусто</h2>
-        <p>Добавь первую задачу.</p>
-        <a href="{% url 'task_create' %}" class="btn primary">Добавить</a>
-    </section>
+
+<section class="empty-state">
+    <img src="{% static 'img/empty-tasks.png' %}" alt="" class="empty-image">
+    <h2>Пока пусто</h2>
+    <p>Добавь первую задачу.</p>
+    <a href="{% url 'task_create' %}" class="btn primary">Добавить</a>
+</section>
 {% endif %}
 
 {% endblock %}

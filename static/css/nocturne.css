@@ -489,3 +489,113 @@ select:focus {
 .auth-note a {
     color: var(--accent);
 }
+
+/* Images */
+
+.hero,
+.card,
+.auth-card,
+.empty-state {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before,
+.card::before,
+.auth-card::before,
+.empty-state::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 180px;
+    height: 180px;
+    background: url("../img/rose-corner.png") left bottom / contain no-repeat;
+    opacity: 0.34;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hero > *,
+.card > *,
+.auth-card > *,
+.empty-state > * {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-image,
+.auth-image {
+    position: relative;
+    z-index: 1;
+}
+
+.auth-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.7fr);
+    gap: 22px;
+    align-items: stretch;
+}
+
+.auth-image {
+    min-height: 520px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: rgba(20, 18, 17, 0.92);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+}
+
+.auth-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, rgba(20, 18, 17, 0.25), rgba(8, 7, 6, 0.42)),
+        linear-gradient(180deg, transparent, rgba(8, 7, 6, 0.56));
+    pointer-events: none;
+}
+
+.auth-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    filter: brightness(0.82) contrast(1.05) saturate(0.8);
+}
+
+.empty-image {
+    width: min(260px, 80%);
+    max-height: 260px;
+    display: block;
+    object-fit: contain;
+    margin: 0 auto 22px;
+    filter: brightness(0.9) contrast(1.05) saturate(0.85);
+}
+
+/* Если где-то понадобится правый угол — можно использовать этот класс */
+.rose-right::before {
+    left: auto;
+    right: 0;
+    transform: scaleX(-1);
+}
+
+@media (max-width: 900px) {
+    .auth-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-image {
+        min-height: 340px;
+        order: -1;
+    }
+
+    .hero::before,
+    .card::before,
+    .auth-card::before,
+    .empty-state::before {
+        width: 130px;
+        height: 130px;
+        opacity: 0.26;
+    }
+}

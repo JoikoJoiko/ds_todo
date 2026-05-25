@@ -1,39 +1,46 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Вход — Nocturne Tasks{% endblock %}
 
 {% block content %}
 
-<section class="auth-card">
-    <p class="label">Login</p>
-    <h1>Вход</h1>
+<section class="auth-layout">
+    <div class="auth-card">
+        <p class="label">Login</p>
+        <h1>Вход</h1>
 
-    <form method="post" class="auth-form">
-        {% csrf_token %}
+        <form method="post" class="auth-form">
+            {% csrf_token %}
 
-        {% if form.non_field_errors %}
-            <div class="form-errors">
-                {{ form.non_field_errors }}
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="form-field">
+                <label for="{{ form.username.id_for_label }}">Логин</label>
+                {{ form.username }}
             </div>
-        {% endif %}
 
-        <div class="form-field">
-            <label for="{{ form.username.id_for_label }}">Логин</label>
-            {{ form.username }}
-        </div>
+            <div class="form-field">
+                <label for="{{ form.password.id_for_label }}">Пароль</label>
+                {{ form.password }}
+            </div>
 
-        <div class="form-field">
-            <label for="{{ form.password.id_for_label }}">Пароль</label>
-            {{ form.password }}
-        </div>
+            <button type="submit" class="btn primary full-width">Войти</button>
 
-        <button type="submit" class="btn primary full-width">Войти</button>
+            <p class="auth-note">
+                Нет аккаунта?
+                <a href="{% url 'register' %}">Регистрация</a>
+            </p>
+        </form>
+    </div>
 
-        <p class="auth-note">
-            Нет аккаунта?
-            <a href="{% url 'register' %}">Регистрация</a>
-        </p>
-    </form>
+    <div class="auth-image">
+        <img src="{% static 'img/auth-art.jpg' %}" alt="">
+    </div>
 </section>
 
 {% endblock %}

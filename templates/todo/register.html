@@ -1,41 +1,48 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Регистрация — Nocturne Tasks{% endblock %}
 
 {% block content %}
 
-<section class="auth-card">
-    <p class="label">Register</p>
-    <h1>Регистрация</h1>
+<section class="auth-layout">
+    <div class="auth-card">
+        <p class="label">Register</p>
+        <h1>Регистрация</h1>
 
-    <form method="post" class="auth-form">
-        {% csrf_token %}
+        <form method="post" class="auth-form">
+            {% csrf_token %}
 
-        <div class="form-field">
-            <label for="{{ form.username.id_for_label }}">Логин</label>
-            {{ form.username }}
-            {{ form.username.errors }}
-        </div>
+            <div class="form-field">
+                <label for="{{ form.username.id_for_label }}">Логин</label>
+                {{ form.username }}
+                {{ form.username.errors }}
+            </div>
 
-        <div class="form-field">
-            <label for="{{ form.password1.id_for_label }}">Пароль</label>
-            {{ form.password1 }}
-            {{ form.password1.errors }}
-        </div>
+            <div class="form-field">
+                <label for="{{ form.password1.id_for_label }}">Пароль</label>
+                {{ form.password1 }}
+                {{ form.password1.errors }}
+            </div>
 
-        <div class="form-field">
-            <label for="{{ form.password2.id_for_label }}">Повтор пароля</label>
-            {{ form.password2 }}
-            {{ form.password2.errors }}
-        </div>
+            <div class="form-field">
+                <label for="{{ form.password2.id_for_label }}">Повтор пароля</label>
+                {{ form.password2 }}
+                {{ form.password2.errors }}
+            </div>
 
-        <button type="submit" class="btn primary full-width">Создать аккаунт</button>
+            <button type="submit" class="btn primary full-width">Создать аккаунт</button>
 
-        <p class="auth-note">
-            Уже есть аккаунт?
-            <a href="{% url 'login' %}">Войти</a>
-        </p>
-    </form>
+            <p class="auth-note">
+                Уже есть аккаунт?
+                <a href="{% url 'login' %}">Войти</a>
+            </p>
+        </form>
+    </div>
+
+    <div class="auth-image">
+        <img src="{% static 'img/auth-art.jpg' %}" alt="">
+    </div>
 </section>
 
 {% endblock %}
